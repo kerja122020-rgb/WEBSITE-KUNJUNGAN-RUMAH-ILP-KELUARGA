@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pendataan Posyandu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .form-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: white;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .success-message {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-4">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
+            <h1 class="text-3xl font-bold text-center text-gray-800 mb-2">Form Pendataan Posyandu</h1>
+            <p class="text-center text-gray-600 mb-8">Sistem Informasi Kesehatan Keluarga</p>
+            
+            <form id="posyanduForm">
+                <!-- Informasi Dasar -->
+                <div class="form-section">
+                    <h2 class="text-xl font-semibold mb-4">📍 Informasi Lokasi & Petugas</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="input-group">
+                            <label class="block text-sm font-medium mb-2">Nama Desa</label>
+                            <select name="namaDesa" required class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                                <option value="">Pilih Desa</option>
+                                <option value="Desa Ganra">Desa Ganra</option>
+                                <option value="Desa Belo">Desa Belo</option>
+                                <option value="Desa Enrekeng">Desa Enrekeng</option>
+                                <option value="Desa Lompulle">Desa Lompulle</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="block text-sm font-medium mb-2">Nama Posyandu</label>
+                            <select name="namaPosyandu" required class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                                <option value="">Pilih Posyandu</option>
+                                <option value="Bakke I">Bakke I</option>
+                                <option value="Bakke II">Bakke II</option>
+                                <option value="Atasya I">Atasya I</option>
+                                <option value="Atasya II">Atasya II</option>
+                                <option value="Paomallimpoe">Paomallimpoe</option>
+                                <option value="Batumemmanae">Batumemmanae</option>
+                                <option value="Mannagae">Mannagae</option>
+                                <option value="Cennoe">Cennoe</option>
+                                <option value="Belo">Belo</option>
+                                <option value="Enrekeng I">Enrekeng I</option>
+                                <option value="Enrekeng II">Enrekeng II</option>
+                                <option value="Mannennungeng">Mannennungeng</option>
+                                <option value="Mappesonae">Mappesonae</option>
+                                <option value="Sipatuo">Sipatuo</option>
+                                <option value="Masengereng">Masengereng</option>
+                                <option value="Sipatokkong">Sipatokkong</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="input-group">
+                            <label class="block text-sm font-medium mb-2">Nama Kader</label>
+                            <input type="text" name="namaKader" required class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="block text-sm font-medium mb-2">Nomor RT</label>
+                            <input type="number" name="nomorRT" required class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="block text-sm font-medium mb-2">Nomor KK</label>
+                            <input type="text" name="nomorKK" required class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="block text-sm font-medium mb-2">Nomor Telepon Keluarga</label>
+                        <input type="tel" name="nomorTelepon" required class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                    </div>
+                </div>
+
+                <!-- Data Kepala Keluarga -->
+                <div class="form-section">
+                    <h2 class="text-xl font-semibold mb-4">👨‍👩‍👧‍👦 Data Kepala Keluarga</h2>
+                    
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="input-group">
+                            <label class="block text-sm font-medium mb-2">Nama Kepala Keluarga</label>
+                            <input type="text" name="namaKepalaKeluarga" required class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="block text-sm font-medium mb-2">NIK Kepala Keluarga</label>
+                            <input type="text" name="nikKepalaKeluarga" required class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="block text-sm font-medium mb-2">Tanggal Lahir Kepala Keluarga</label>
+                            <input type="date" name="tanggalLahirKepalaKeluarga" required class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Anggota Keluarga -->
+                <div class="form-section">
+                    <h2 class="text-xl font-semibold mb-4">👥 Data Anggota Keluarga</h2>
+                    
+                    <div id="anggotaKeluargaContainer">
+                        <!-- Anggota keluarga akan ditambahkan secara dinamis -->
+                        <div class="anggota-keluarga mb-4 p-4 bg-white bg-opacity-20 rounded-lg">
+                            <h3 class="font-medium mb-3">Anggota Keluarga 1</h3>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <input type="text" name="namaAnggota1" placeholder="Nama" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                                <input type="text" name="nikAnggota1" placeholder="NIK" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                                <input type="date" name="tanggalLahirAnggota1" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                            </div>
+                        </div>
+                        
+                        <div class="anggota-keluarga mb-4 p-4 bg-white bg-opacity-20 rounded-lg">
+                            <h3 class="font-medium mb-3">Anggota Keluarga 2</h3>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <input type="text" name="namaAnggota2" placeholder="Nama" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                                <input type="text" name="nikAnggota2" placeholder="NIK" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                                <input type="date" name="tanggalLahirAnggota2" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                            </div>
+                        </div>
+                        
+                        <div class="anggota-keluarga mb-4 p-4 bg-white bg-opacity-20 rounded-lg">
+                            <h3 class="font-medium mb-3">Anggota Keluarga 3</h3>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <input type="text" name="namaAnggota3" placeholder="Nama" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                                <input type="text" name="nikAnggota3" placeholder="NIK" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                                <input type="date" name="tanggalLahirAnggota3" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                            </div>
+                        </div>
+                        
+                        <div class="anggota-keluarga mb-4 p-4 bg-white bg-opacity-20 rounded-lg">
+                            <h3 class="font-medium mb-3">Anggota Keluarga 4</h3>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <input type="text" name="namaAnggota4" placeholder="Nama" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                                <input type="text" name="nikAnggota4" placeholder="NIK" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                                <input type="date" name="tanggalLahirAnggota4" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                            </div>
+                        </div>
+                        
+                        <div class="anggota-keluarga mb-4 p-4 bg-white bg-opacity-20 rounded-lg">
+                            <h3 class="font-medium mb-3">Anggota Keluarga 5</h3>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <input type="text" name="namaAnggota5" placeholder="Nama" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                                <input type="text" name="nikAnggota5" placeholder="NIK" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                                <input type="date" name="tanggalLahirAnggota5" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                            </div>
+                        </div>
+                        
+                        <div class="anggota-keluarga mb-4 p-4 bg-white bg-opacity-20 rounded-lg">
+                            <h3 class="font-medium mb-3">Anggota Keluarga 6</h3>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <input type="text" name="namaAnggota6" placeholder="Nama" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                                <input type="text" name="nikAnggota6" placeholder="NIK" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                                <input type="date" name="tanggalLahirAnggota6" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kondisi Sanitasi -->
+                <div class="form-section">
+                    <h2 class="text-xl font-semibold mb-4">🏠 Kondisi Sanitasi & Lingkungan</h2>
+                    
+                    <!-- Air Bersih -->
+                    <div class="input-group">
+                        <label class="block text-sm font-medium mb-2">Apakah tersedia sarana air bersih?</label>
+                        <div class="flex gap-4 mb-3">
+                            <label class="flex items-center">
+                                <input type="radio" name="airBersih" value="Ya" onchange="toggleAirBersihDetail()" class="mr-2">
+                                <span>Ya</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="airBersih" value="Tidak" onchange="toggleAirBersihDetail()" class="mr-2">
+                                <span>Tidak</span>
+                            </label>
+                        </div>
+                        
+                        <div id="airBersihDetail" style="display: none;">
+                            <label class="block text-sm font-medium mb-2">Apakah sumber air terlindung?</label>
+                            <div class="flex gap-4">
+                                <label class="flex items-center">
+                                    <input type="radio" name="sumberAirTerlindung" value="Ya" class="mr-2">
+                                    <span>Ya (PDAM, sumur pompa, sumur gali terlindung, mata air terlindung)</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="sumberAirTerlindung" value="Tidak" class="mr-2">
+                                    <span>Tidak (Sumur terbuka, air sungai, danau)</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Jamban -->
+                    <div class="input-group">
+                        <label class="block text-sm font-medium mb-2">Apakah tersedia jamban keluarga?</label>
+                        <div class="flex gap-4 mb-3">
+                            <label class="flex items-center">
+                                <input type="radio" name="jambanKeluarga" value="Ya" onchange="toggleJambanDetail()" class="mr-2">
+                                <span>Ya</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="jambanKeluarga" value="Tidak" onchange="toggleJambanDetail()" class="mr-2">
+                                <span>Tidak</span>
+                            </label>
+                        </div>
+                        
+                        <div id="jambanDetail" style="display: none;">
+                            <label class="block text-sm font-medium mb-2">Apakah jamban saniter?</label>
+                            <div class="flex gap-4">
+                                <label class="flex items-center">
+                                    <input type="radio" name="jambanSaniter" value="Ya" class="mr-2">
+                                    <span>Ya (closet, leher angsa, plengsengan)</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="jambanSaniter" value="Tidak" class="mr-2">
+                                    <span>Tidak (Cemplung)</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ventilasi -->
+                    <div class="input-group">
+                        <label class="block text-sm font-medium mb-2">Apakah rumah memiliki ventilasi yang cukup?</label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="ventilasi" value="Ya" class="mr-2">
+                                <span>Ya</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="ventilasi" value="Tidak" class="mr-2">
+                                <span>Tidak</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Jentik Nyamuk -->
+                    <div class="input-group">
+                        <label class="block text-sm font-medium mb-2">Apakah terdapat jentik nyamuk?</label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="jentikNyamuk" value="Ya" class="mr-2">
+                                <span>Ya</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="jentikNyamuk" value="Tidak" class="mr-2">
+                                <span>Tidak</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Tanaman Obat -->
+                    <div class="input-group">
+                        <label class="block text-sm font-medium mb-2">Apakah keluarga memiliki minimal 3 jenis tanaman obat keluarga?</label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="tanamanObat" value="Ya" class="mr-2">
+                                <span>Ya</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="tanamanObat" value="Tidak" class="mr-2">
+                                <span>Tidak</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kondisi Kesehatan -->
+                <div class="form-section">
+                    <h2 class="text-xl font-semibold mb-4">🏥 Kondisi Kesehatan Keluarga</h2>
+                    
+                    <!-- Gangguan Jiwa -->
+                    <div class="input-group">
+                        <label class="block text-sm font-medium mb-2">Apakah ada anggota keluarga yang mengalami gangguan jiwa?</label>
+                        <div class="flex gap-4 mb-3">
+                            <label class="flex items-center">
+                                <input type="radio" name="gangguanJiwa" value="Ya" onchange="toggleGangguanJiwaDetail()" class="mr-2">
+                                <span>Ya</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="gangguanJiwa" value="Tidak" onchange="toggleGangguanJiwaDetail()" class="mr-2">
+                                <span>Tidak</span>
+                            </label>
+                        </div>
+                        
+                        <div id="gangguanJiwaDetail" style="display: none;">
+                            <input type="text" name="namaGangguanJiwa" placeholder="Tuliskan nama anggota keluarga" class="w-full p-3 border border-gray-300 rounded-lg text-gray-800">
+                        </div>
+                    </div>
+                    
+                    <!-- Penyakit -->
+                    <div class="input-group">
+                        <label class="block text-sm font-medium mb-2">Adakah anggota keluarga yang menderita:</label>
+                        <div class="checkbox-group">
+                            <label class="flex items-center bg-white bg-opacity-20 p-2 rounded">
+                                <input type="checkbox" name="penyakit" value="TBC" class="mr-2">
+                                <span>TBC</span>
+                            </label>
+                            <label class="flex items-center bg-white bg-opacity-20 p-2 rounded">
+                                <input type="checkbox" name="penyakit" value="Hipertensi" class="mr-2">
+                                <span>Hipertensi</span>
+                            </label>
+                            <label class="flex items-center bg-white bg-opacity-20 p-2 rounded">
+                                <input type="checkbox" name="penyakit" value="Diabetes Mellitus" class="mr-2">
+                                <span>Diabetes Mellitus</span>
+                            </label>
+                            <label class="flex items-center bg-white bg-opacity-20 p-2 rounded">
+                                <input type="checkbox" name="penyakit" value="Tidak ada" class="mr-2">
+                                <span>Tidak ada</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Merokok -->
+                    <div class="input-group">
+                        <label class="block text-sm font-medium mb-2">Adakah anggota keluarga yang merokok?</label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="merokok" value="Ya" class="mr-2">
+                                <span>Ya</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="merokok" value="Tidak" class="mr-2">
+                                <span>Tidak</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" id="submitBtn" class="bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg transform hover:scale-105 transition-all duration-200">
+                        📊 Kirim Data ke Spreadsheet
+                    </button>
+                </div>
+            </form>
+            
+            <div id="loadingMessage" class="loading">
+                <div class="spinner"></div>
+                <p class="mt-4 text-gray-600">Sedang mengirim data ke spreadsheet...</p>
+            </div>
+            
+            <div id="successMessage" class="success-message">
+                ✅ Data berhasil dikirim ke spreadsheet! Terima kasih atas kontribusi Anda.
+            </div>
+            
+            <div id="errorMessage" class="success-message" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); display: none;">
+                ❌ Terjadi kesalahan saat mengirim data. Silakan coba lagi.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAirBersihDetail() {
+            const airBersih = document.querySelector('input[name="airBersih"]:checked');
+            const detail = document.getElementById('airBersihDetail');
+            if (airBersih && airBersih.value === 'Ya') {
+                detail.style.display = 'block';
+            } else {
+                detail.style.display = 'none';
+            }
+        }
+
+        function toggleJambanDetail() {
+            const jamban = document.querySelector('input[name="jambanKeluarga"]:checked');
+            const detail = document.getElementById('jambanDetail');
+            if (jamban && jamban.value === 'Ya') {
+                detail.style.display = 'block';
+            } else {
+                detail.style.display = 'none';
+            }
+        }
+
+        function toggleGangguanJiwaDetail() {
+            const gangguan = document.querySelector('input[name="gangguanJiwa"]:checked');
+            const detail = document.getElementById('gangguanJiwaDetail');
+            if (gangguan && gangguan.value === 'Ya') {
+                detail.style.display = 'block';
+            } else {
+                detail.style.display = 'none';
+            }
+        }
+
+        document.getElementById('posyanduForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Tampilkan loading
+            document.getElementById('loadingMessage').style.display = 'block';
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+            
+            // Kumpulkan semua data form
+            const formData = new FormData(this);
+            const data = {};
+            
+            // Konversi FormData ke object
+            for (let [key, value] of formData.entries()) {
+                if (data[key]) {
+                    // Jika key sudah ada (untuk checkbox), buat array
+                    if (Array.isArray(data[key])) {
+                        data[key].push(value);
+                    } else {
+                        data[key] = [data[key], value];
+                    }
+                } else {
+                    data[key] = value;
+                }
+            }
+            
+            // Tambahkan timestamp
+            data.timestamp = new Date().toLocaleString('id-ID');
+            
+            // URL Google Apps Script yang sudah Anda berikan
+            const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyMg4702IM0dAutpg-yvNCEU4O998Jh98VIurIIyzZ2ocWl39pr6HfcDb9mPL5gXqiH2A/exec';
+            
+            // Kirim data ke Google Apps Script
+            fetch(GOOGLE_APPS_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(() => {
+                // Sembunyikan loading
+                document.getElementById('loadingMessage').style.display = 'none';
+                document.getElementById('submitBtn').disabled = false;
+                
+                // Tampilkan pesan sukses
+                document.getElementById('successMessage').style.display = 'block';
+                
+                // Reset form
+                this.reset();
+                
+                // Sembunyikan detail sections
+                document.getElementById('airBersihDetail').style.display = 'none';
+                document.getElementById('jambanDetail').style.display = 'none';
+                document.getElementById('gangguanJiwaDetail').style.display = 'none';
+                
+                // Scroll ke atas
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // Sembunyikan pesan sukses setelah 5 detik
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 5000);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                
+                // Sembunyikan loading
+                document.getElementById('loadingMessage').style.display = 'none';
+                document.getElementById('submitBtn').disabled = false;
+                
+                // Tampilkan pesan error
+                document.getElementById('errorMessage').style.display = 'block';
+                
+                // Sembunyikan pesan error setelah 5 detik
+                setTimeout(() => {
+                    document.getElementById('errorMessage').style.display = 'none';
+                }, 5000);
+            });
+        });
+
+        // Validasi checkbox penyakit (hanya boleh pilih satu jika "Tidak ada")
+        document.addEventListener('change', function(e) {
+            if (e.target.name === 'penyakit') {
+                const checkboxes = document.querySelectorAll('input[name="penyakit"]');
+                const tidakAda = document.querySelector('input[name="penyakit"][value="Tidak ada"]');
+                
+                if (e.target.value === 'Tidak ada' && e.target.checked) {
+                    // Jika "Tidak ada" dipilih, uncheck yang lain
+                    checkboxes.forEach(cb => {
+                        if (cb.value !== 'Tidak ada') cb.checked = false;
+                    });
+                } else if (e.target.checked && tidakAda.checked) {
+                    // Jika pilihan lain dipilih, uncheck "Tidak ada"
+                    tidakAda.checked = false;
+                }
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'982f9b10a69ba1af',t:'MTc1ODUyMTA3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+
